@@ -11,7 +11,7 @@ import org.theseed.utils.BaseProcessor;
 import org.theseed.utils.ParseFailureException;
 
 /**
- * This command takes the CheckV output for a binning run.  It will sort contigs into virus bins (vbin.fa) and produce a tab-delimited
+ * This command processes the CheckV output for a binning run.  It will sort contigs into virus bins (vbin.fa) and produce a tab-delimited
  * report on the results.
  *
  * The positional parameters are the name of the directory containing the CheckV database, the name of the binning output directory,
