@@ -9,6 +9,7 @@ import org.theseed.utils.BaseProcessor;
  *
  * bins		produce a report comparing bin quality to its distance to the reference genome
  * checkv	produce a report on the checkv output
+ * synth	generate a synthetic sample from a repget list file
  *
  */
 public class App
@@ -25,6 +26,9 @@ public class App
             break;
         case "checkv" :
             processor = new CheckVProcessor();
+            break;
+        case "synth" :
+            processor = new SyntheticSampleProcessor();
             break;
         default :
             throw new RuntimeException("Invalid command " + command + ".");

@@ -4,7 +4,7 @@
 
   <groupId>org.theseed</groupId>
   <artifactId>genome.bins</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>genome.bins</name>
   <url>https://www.patricbrc.org</url>
@@ -47,6 +47,16 @@
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
         <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.theseed</groupId>
+        <artifactId>p3api</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.theseed</groupId>
+        <artifactId>shared</artifactId>
+        <version>1.0.0</version>
     </dependency>
   </dependencies>
 
