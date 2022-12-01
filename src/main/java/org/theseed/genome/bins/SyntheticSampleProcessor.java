@@ -258,7 +258,7 @@ public class SyntheticSampleProcessor extends BaseInputProcessor {
                     log.info("Processing genome {} for rep {}: {}", genomeID, repID, neighbor.getName());
                     gCount++;
                     // Get the contigs from PATRIC.
-                    var gto = P3Genome.load(this.p3, repID, P3Genome.Details.CONTIGS);
+                    var gto = P3Genome.load(this.p3, genomeID, P3Genome.Details.CONTIGS);
                     for (Contig contig : gto.getContigs()) {
                         // Verify that we want this contig.
                         if (Math.random() < this.contigFrac) {
