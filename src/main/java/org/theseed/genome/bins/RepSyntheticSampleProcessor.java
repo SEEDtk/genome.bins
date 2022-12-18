@@ -4,7 +4,6 @@
 package org.theseed.genome.bins;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,12 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.theseed.counters.CountMap;
 import org.theseed.counters.Spacer;
-import org.theseed.genome.Contig;
+import org.theseed.genome.SynthWriter;
 import org.theseed.io.TabbedLineReader;
 import org.theseed.p3api.P3Connection;
 import org.theseed.p3api.P3Genome;
-import org.theseed.sequence.FastaOutputStream;
-import org.theseed.sequence.Sequence;
 import org.theseed.utils.BaseInputProcessor;
 import org.theseed.utils.ParseFailureException;
 
@@ -53,11 +50,11 @@ import org.theseed.utils.ParseFailureException;
  * @author Bruce Parrello
  *
  */
-public class SyntheticSampleProcessor extends BaseInputProcessor {
+public class RepSyntheticSampleProcessor extends BaseInputProcessor {
 
     // FIELDS
     /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(SyntheticSampleProcessor.class);
+    protected static Logger log = LoggerFactory.getLogger(RepSyntheticSampleProcessor.class);
     /** map of representative genomes to neighbor lists */
     private Map<String, List<Neighbor>> neighborhoodMap;
     /** neighbor genome ID column index */
@@ -152,8 +149,8 @@ public class SyntheticSampleProcessor extends BaseInputProcessor {
         @Override
         public int compare(String o1, String o2) {
             // Get the neighbor lists.
-            List<Neighbor> list1 = SyntheticSampleProcessor.this.neighborhoodMap.getOrDefault(o1, NO_NEIGHBORS);
-            List<Neighbor> list2 = SyntheticSampleProcessor.this.neighborhoodMap.getOrDefault(o2, NO_NEIGHBORS);
+            List<Neighbor> list1 = RepSyntheticSampleProcessor.this.neighborhoodMap.getOrDefault(o1, NO_NEIGHBORS);
+            List<Neighbor> list2 = RepSyntheticSampleProcessor.this.neighborhoodMap.getOrDefault(o2, NO_NEIGHBORS);
             // Compare the lengths.  Longer sorts first.
             int retVal = list2.size() - list1.size();
             // Fall back to lexical by genome ID.
@@ -194,7 +191,7 @@ public class SyntheticSampleProcessor extends BaseInputProcessor {
     protected void runReader(TabbedLineReader reader) throws Exception {
         // Start by opening the output file.  We do this first so that if we can't write to it, we find out
         // before going through all the work of finding the contigs.
-        try (FastaOutputStream outStream = this.getOutputStream()) {
+        try (SynthWriter outWriter = new SynthWriter(this.outFile, this.contigFrac)) {
             // Get some counters.
             int genomesIn = 0;
             int neighborsFound = 0;
@@ -245,8 +242,6 @@ public class SyntheticSampleProcessor extends BaseInputProcessor {
             }
             log.info("{} genomes will be output.", totalProposed);
             // Now we run through the neighborhoods, selecting genomes.
-            int gCount = 0;
-            int seqCount = 0;
             for (var counter : proposedCounts.counts()) {
                 String repID = counter.getKey();
                 int count = counter.getCount();
@@ -255,39 +250,12 @@ public class SyntheticSampleProcessor extends BaseInputProcessor {
                 while (iter.hasNext()) {
                     var neighbor = iter.next();
                     var genomeID = neighbor.getID();
-                    log.info("Processing genome {} for rep {}: {}", genomeID, repID, neighbor.getName());
-                    gCount++;
                     // Get the contigs from PATRIC.
                     var gto = P3Genome.load(this.p3, genomeID, P3Genome.Details.CONTIGS);
-                    for (Contig contig : gto.getContigs()) {
-                        // Verify that we want this contig.
-                        if (Math.random() < this.contigFrac) {
-                            // Format the label and comment.
-                            String label = genomeID + ":" + contig.getId();
-                            String comment = neighbor.getName() + "\t" + repID + "\t" + Double.toString(neighbor.getDistance());
-                            Sequence seq = new Sequence(label, comment, contig.getSequence());
-                            outStream.write(seq);
-                            seqCount++;
-                        }
-                    }
+                    outWriter.writeGenome(gto, repID, neighbor.getDistance());
                 }
             }
-            log.info("{} genomes and {} sequences output.", gCount, seqCount);
         }
-    }
-
-    /**
-     * @return the FASTA output stream to use for writing the contigs
-     *
-     * @throws FileNotFoundException
-     */
-    private FastaOutputStream getOutputStream() throws FileNotFoundException {
-        FastaOutputStream retVal;
-        if (this.outFile != null)
-            retVal = new FastaOutputStream(this.outFile);
-        else
-            retVal = new FastaOutputStream(System.out);
-        return retVal;
     }
 
 }
