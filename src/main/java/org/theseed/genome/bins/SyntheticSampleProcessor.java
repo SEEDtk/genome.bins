@@ -119,9 +119,10 @@ public class SyntheticSampleProcessor extends BaseProcessor {
         if (! this.outDir.isDirectory()) {
             log.info("Creating genome output directory {}.", this.outDir);
             FileUtils.forceMkdir(this.outDir);
-        } else if (this.clearFlag)
+        } else if (this.clearFlag) {
             log.info("Erasing genome output directory {}.", this.outDir);
-        else
+            FileUtils.cleanDirectory(this.outDir);
+        } else
             log.info("Selected genomes will be cached in {}.", this.outDir);
         // Load the repgen database.
         if (! this.repDbFile.canRead())

@@ -45,8 +45,10 @@ public abstract class SynthFactory {
         Genome retVal;
         if (this.nGenomes >= this.maxGenomes)
             retVal = null;
-        else
+        else {
             retVal = this.getNextGenome();
+            this.nGenomes++;
+        }
         return retVal;
     }
 
