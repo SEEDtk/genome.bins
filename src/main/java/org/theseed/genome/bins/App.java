@@ -11,6 +11,7 @@ import org.theseed.utils.BaseProcessor;
  * checkv	produce a report on the checkv output
  * repSynth	generate a synthetic sample from a repgen list file
  * synth	generate a synthetic sample from multiple sources
+ * synth2	generate a synthetic sample from a genome directory
  */
 public class App
 {
@@ -32,6 +33,9 @@ public class App
             break;
         case "synth" :
             processor = new SyntheticSampleProcessor();
+            break;
+        case "synth2" :
+            processor = new SyntheticSampleRewriteProcessor();
             break;
         default :
             throw new RuntimeException("Invalid command " + command + ".");
