@@ -11,12 +11,12 @@ import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.theseed.basic.BaseProcessor;
+import org.theseed.basic.ParseFailureException;
 import org.theseed.genome.Genome;
 import org.theseed.genome.SynthWriter;
 import org.theseed.genome.iterator.GenomeSource;
 import org.theseed.proteins.kmers.reps.RepGenomeDb;
-import org.theseed.utils.BaseProcessor;
-import org.theseed.utils.ParseFailureException;
 
 /**
  * This command re-purposes a synthetic sample genome directory for a different repgen set.  The positional

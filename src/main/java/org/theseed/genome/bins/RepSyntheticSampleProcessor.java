@@ -15,6 +15,7 @@ import java.util.Map;
 import org.kohsuke.args4j.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.theseed.basic.ParseFailureException;
 import org.theseed.counters.CountMap;
 import org.theseed.counters.Spacer;
 import org.theseed.genome.SynthWriter;
@@ -22,7 +23,6 @@ import org.theseed.io.TabbedLineReader;
 import org.theseed.p3api.P3Connection;
 import org.theseed.p3api.P3Genome;
 import org.theseed.utils.BaseInputProcessor;
-import org.theseed.utils.ParseFailureException;
 
 /**
  * This command creates a synthetic sample based around a repgen set.  The standard input should contain

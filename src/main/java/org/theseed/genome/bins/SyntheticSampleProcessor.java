@@ -13,6 +13,8 @@ import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.theseed.basic.BaseProcessor;
+import org.theseed.basic.ParseFailureException;
 import org.theseed.genome.BinSynthFactory;
 import org.theseed.genome.Genome;
 import org.theseed.genome.PatricSynthFactory;
@@ -20,8 +22,6 @@ import org.theseed.genome.SynthFactory;
 import org.theseed.genome.SynthWriter;
 import org.theseed.proteins.kmers.reps.RepGenome;
 import org.theseed.proteins.kmers.reps.RepGenomeDb;
-import org.theseed.utils.BaseProcessor;
-import org.theseed.utils.ParseFailureException;
 
 /**
  * This command creates a synthetic sample for hammer testing from a binning directory and/or a PATRIC evaluation

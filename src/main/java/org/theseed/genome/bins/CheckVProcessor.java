@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.theseed.utils.BaseProcessor;
-import org.theseed.utils.ParseFailureException;
+import org.theseed.basic.BaseProcessor;
+import org.theseed.basic.ParseFailureException;
 
 /**
  * This command processes the CheckV output for a binning run.  It will sort contigs into virus bins (vbin.fa) and produce a tab-delimited

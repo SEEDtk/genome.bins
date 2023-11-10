@@ -2,7 +2,7 @@ package org.theseed.genome.bins;
 
 import java.util.Arrays;
 
-import org.theseed.utils.BaseProcessor;
+import org.theseed.basic.BaseProcessor;
 
 /**
  * This performs various analyses of binning runs.  The possible commands are:
