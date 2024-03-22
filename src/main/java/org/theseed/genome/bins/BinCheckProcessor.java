@@ -16,11 +16,11 @@ import org.kohsuke.args4j.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.theseed.basic.BaseProcessor;
-import org.theseed.counters.QualityCountMap;
 import org.theseed.genome.Feature;
 import org.theseed.genome.Genome;
 import org.theseed.io.TabbedLineReader;
 import org.theseed.sequence.ProteinKmers;
+import org.theseed.stats.QualityCountMap;
 
 /**
  * This command creates a chart of bin quality against PheS distance.  For each bin, it displays the PheS distance between the

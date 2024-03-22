@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.theseed.counters.Shuffler;
+import org.theseed.stats.Shuffler;
 
 /**
  * This object performs analysis of a source for synthetic sample genomes.  When a new source is
